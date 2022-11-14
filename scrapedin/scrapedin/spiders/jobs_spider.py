@@ -18,7 +18,7 @@ class JobsSpider(scrapy.Spider):
             yield {
                 'link': extract_with_css(job, 'a::attr(href)'),
                 'title': extract_with_css(info, 'h3.base-search-card__title::text'),
-                'subtitle': extract_with_css(info, 'h4.base-search-card__subtitle::text'),
+                'subtitle': extract_with_css(info, 'h4.base-search-card__subtitle a::text'),
                 'location': extract_with_css(metadata, 'span.job-search-card__location::text'),
                 'listdate': extract_with_css(metadata, 'time::attr(datetime)')
             }
