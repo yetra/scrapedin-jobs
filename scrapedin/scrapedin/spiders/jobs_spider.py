@@ -1,4 +1,20 @@
+from enum import Enum
 import scrapy
+
+
+class JobSelector(Enum):
+    BASE = 'li div.job-search-card'
+
+    INFO = 'div.base-search-card__info'
+    METADATA = 'div.base-search-card__metadata'
+
+    URL = 'a.base-card__full-link::attr(href)'
+    ICON_URL = 'div.search-entity-media img::attr(data-delayed-url)'
+
+    TITLE = 'h3.base-search-card__title::text'
+    SUBTITLE = 'h4.base-search-card__subtitle a::text'
+    LOCATION = 'span.job-search-card__location::text'
+    LIST_DATE = 'time::attr(datetime)'
 
 
 class JobsSpider(scrapy.Spider):
@@ -15,19 +31,19 @@ class JobsSpider(scrapy.Spider):
         def remove_url_query_string(url):
             return url.split('?')[0]
 
-        for job in response.css('li div.job-search-card'):
-            info = job.css('div.base-search-card__info')[0]
-            metadata = info.css('div.base-search-card__metadata')[0]
+        for job in response.css(JobSelector.BASE):
+            info = job.css(JobSelector.INFO)[0]
+            metadata = info.css(JobSelector.METADATA)[0]
 
-            link = remove_url_query_string(extract_with_css(job, 'a::attr(href)'))
+            link = remove_url_query_string(extract_with_css(job, JobSelector.URL))
 
             data = {
                 'link': link,
-                'icon_url': extract_with_css(job, 'div.search-entity-media img::attr(data-delayed-url)'),
-                'title': extract_with_css(info, 'h3.base-search-card__title::text'),
-                'subtitle': extract_with_css(info, 'h4.base-search-card__subtitle a::text'),
-                'location': extract_with_css(metadata, 'span.job-search-card__location::text'),
-                'listdate': extract_with_css(metadata, 'time::attr(datetime)'),
+                'icon_url': extract_with_css(job, JobSelector.ICON_URL),
+                'title': extract_with_css(info, JobSelector.TITLE),
+                'subtitle': extract_with_css(info, JobSelector.SUBTITLE),
+                'location': extract_with_css(metadata, JobSelector.LOCATION),
+                'listdate': extract_with_css(metadata, JobSelector.LIST_DATE),
                 'description': response.follow(link, callback=self.parse_description),
             }
 
