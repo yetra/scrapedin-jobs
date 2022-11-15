@@ -1,4 +1,3 @@
-from enum import Enum
 import scrapy
 
 BASE_URL = 'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/' \
@@ -13,7 +12,7 @@ def remove_url_query_string(url):
     return url.split('?')[0]
 
 
-class JobSelector(Enum):
+class JobSelector:
     BASE = 'li div.job-search-card'
 
     INFO = 'div.base-search-card__info'
