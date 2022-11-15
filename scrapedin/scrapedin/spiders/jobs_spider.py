@@ -16,6 +16,8 @@ class JobSelector(Enum):
     LOCATION = 'span.job-search-card__location::text'
     LIST_DATE = 'time::attr(datetime)'
 
+    DESCRIPTION = 'div.description__text section div'
+
 
 class JobsSpider(scrapy.Spider):
     name = 'jobs'
@@ -50,7 +52,7 @@ class JobsSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse_description, meta=data)
 
     def parse_description(self, response):
-        description = response.css('div.description__text section div').get()
+        description = response.css(JobSelector.DESCRIPTION).get()
         response.meta['description'] = description
 
         yield response.meta
