@@ -47,7 +47,7 @@ class JobsSpider(scrapy.Spider):
             info = job.css(JobSelector.INFO)[0]
             metadata = info.css(JobSelector.METADATA)[0]
 
-            job_item = JobItem(
+            item = JobItem(
                 url=url,
                 icon_url=extract_with_css(job, JobSelector.ICON_URL),
                 title=extract_with_css(info, JobSelector.TITLE),
@@ -56,7 +56,7 @@ class JobsSpider(scrapy.Spider):
                 list_date=extract_with_css(metadata, JobSelector.LIST_DATE),
             )
 
-            yield scrapy.Request(url=url, callback=self.parse_description, meta=job_item)
+            yield scrapy.Request(url=url, callback=self.parse_description, cb_kwargs=dict(item=item))
 
         if jobs:
             self.num_scraped += len(jobs)
@@ -64,8 +64,7 @@ class JobsSpider(scrapy.Spider):
 
             yield scrapy.Request(url=more_jobs_url, callback=self.parse)
 
-    def parse_description(self, response):
-        description = response.css(JobSelector.DESCRIPTION).get()
-        response.meta['description'] = description
+    def parse_description(self, response, item):
+        item['description'] = response.css(JobSelector.DESCRIPTION).get()
 
-        yield response.meta
+        yield item
