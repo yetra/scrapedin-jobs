@@ -3,8 +3,7 @@ import scrapy
 from scrapedin.items import JobItem
 
 
-BASE_URL = 'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/' \
-           'search?keywords=Python&location=Croatia'
+BASE_URL = 'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search'
 
 
 def extract_with_css(selector_obj, css_pattern):
@@ -36,7 +35,22 @@ class JobsSpider(scrapy.Spider):
     name = 'jobs'
 
     num_scraped = 0
-    start_urls = [f'{BASE_URL}&start={num_scraped}']
+    base_url = ''
+
+    def start_requests(self):
+        self.base_url = (
+            f'{BASE_URL}'
+            f'?keywords={getattr(self, "keywords", "")}'
+            f'&location={getattr(self, "location", "")}'
+            f'&f_JT={getattr(self, "job_type", "")}'
+            f'&f_E={getattr(self, "experience_level", "")}'
+            f'&f_WT={getattr(self, "work_type", "")}'
+        )
+
+        yield scrapy.Request(
+            url=f'{self.base_url}&start={self.num_scraped}',
+            callback=self.parse
+        )
 
     def parse(self, response, **kwargs):
         jobs = response.css(JobSelector.BASE)
@@ -68,7 +82,7 @@ class JobsSpider(scrapy.Spider):
         if jobs:
             # scrape more jobs
             yield scrapy.Request(
-                url=f'{BASE_URL}&start={self.num_scraped}',
+                url=f'{self.base_url}&start={self.num_scraped}',
                 callback=self.parse
             )
 
