@@ -37,7 +37,9 @@ class JobsSpider(scrapy.Spider):
     start_urls = [f'{BASE_URL}&start={num_scraped}']
 
     def parse(self, response, **kwargs):
-        for job in response.css(JobSelector.BASE):
+        jobs = response.css(JobSelector.BASE)
+
+        for job in jobs:
             url = remove_url_query_string(extract_with_css(job, JobSelector.URL))
 
             info = job.css(JobSelector.INFO)[0]
@@ -54,6 +56,12 @@ class JobsSpider(scrapy.Spider):
             }
 
             yield scrapy.Request(url=url, callback=self.parse_description, meta=data)
+
+        if jobs:
+            self.num_scraped += len(jobs)
+            more_jobs_url = f'{BASE_URL}&start={self.num_scraped}'
+
+            yield scrapy.Request(url=more_jobs_url, callback=self.parse)
 
     def parse_description(self, response):
         description = response.css(JobSelector.DESCRIPTION).get()
