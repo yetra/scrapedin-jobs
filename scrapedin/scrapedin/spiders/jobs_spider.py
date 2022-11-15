@@ -4,7 +4,8 @@ import scrapy
 class JobsSpider(scrapy.Spider):
     name = 'jobs'
     start_urls = [
-        'https://www.linkedin.com/jobs/search?keywords=Python&location=Croatia'
+        'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/'
+        'search?keywords=Python&location=Croatia&start=0',
     ]
 
     def parse(self, response, **kwargs):
@@ -14,7 +15,7 @@ class JobsSpider(scrapy.Spider):
         def remove_url_query_string(url):
             return url.split('?')[0]
 
-        for job in response.css('ul.jobs-search__results-list li'):
+        for job in response.css('li div.job-search-card'):
             info = job.css('div.base-search-card__info')[0]
             metadata = info.css('div.base-search-card__metadata')[0]
 
