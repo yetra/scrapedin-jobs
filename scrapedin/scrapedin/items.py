@@ -6,7 +6,13 @@
 import scrapy
 
 
-class ScrapedinItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class JobItem(scrapy.Item):
+    url = scrapy.Field()
+    icon_url = scrapy.Field()
+
+    title = scrapy.Field()
+    subtitle = scrapy.Field()
+    location = scrapy.Field()
+    list_date = scrapy.Field()
+
+    description = scrapy.Field()
