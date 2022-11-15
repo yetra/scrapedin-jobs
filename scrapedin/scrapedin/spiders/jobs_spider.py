@@ -23,11 +23,12 @@ class JobsSpider(scrapy.Spider):
 
             data = {
                 'link': link,
+                'icon_url': extract_with_css(job, 'div.search-entity-media img::attr(data-delayed-url)'),
                 'title': extract_with_css(info, 'h3.base-search-card__title::text'),
                 'subtitle': extract_with_css(info, 'h4.base-search-card__subtitle a::text'),
                 'location': extract_with_css(metadata, 'span.job-search-card__location::text'),
                 'listdate': extract_with_css(metadata, 'time::attr(datetime)'),
-                'description': response.follow(link, callback=self.parse_description)
+                'description': response.follow(link, callback=self.parse_description),
             }
 
             yield scrapy.Request(url=link, callback=self.parse_description, meta=data)
