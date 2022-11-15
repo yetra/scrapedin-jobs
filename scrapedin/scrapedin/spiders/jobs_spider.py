@@ -1,5 +1,8 @@
 import scrapy
 
+from scrapedin.items import JobItem
+
+
 BASE_URL = 'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/' \
            'search?keywords=Python&location=Croatia'
 
@@ -44,16 +47,16 @@ class JobsSpider(scrapy.Spider):
             info = job.css(JobSelector.INFO)[0]
             metadata = info.css(JobSelector.METADATA)[0]
 
-            data = {
-                'url': url,
-                'icon_url': extract_with_css(job, JobSelector.ICON_URL),
-                'title': extract_with_css(info, JobSelector.TITLE),
-                'subtitle': extract_with_css(info, JobSelector.SUBTITLE),
-                'location': extract_with_css(metadata, JobSelector.LOCATION),
-                'listdate': extract_with_css(metadata, JobSelector.LIST_DATE),
-            }
+            job_item = JobItem(
+                url=url,
+                icon_url=extract_with_css(job, JobSelector.ICON_URL),
+                title=extract_with_css(info, JobSelector.TITLE),
+                subtitle=extract_with_css(info, JobSelector.SUBTITLE),
+                location=extract_with_css(metadata, JobSelector.LOCATION),
+                list_date=extract_with_css(metadata, JobSelector.LIST_DATE),
+            )
 
-            yield scrapy.Request(url=url, callback=self.parse_description, meta=data)
+            yield scrapy.Request(url=url, callback=self.parse_description, meta=job_item)
 
         if jobs:
             self.num_scraped += len(jobs)
