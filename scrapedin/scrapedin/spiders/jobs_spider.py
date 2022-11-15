@@ -51,7 +51,6 @@ class JobsSpider(scrapy.Spider):
                 'subtitle': extract_with_css(info, JobSelector.SUBTITLE),
                 'location': extract_with_css(metadata, JobSelector.LOCATION),
                 'listdate': extract_with_css(metadata, JobSelector.LIST_DATE),
-                'description': response.follow(url, callback=self.parse_description),
             }
 
             yield scrapy.Request(url=url, callback=self.parse_description, meta=data)
