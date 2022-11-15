@@ -1,6 +1,9 @@
 from enum import Enum
 import scrapy
 
+BASE_URL = 'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/' \
+           'search?keywords=Python&location=Croatia'
+
 
 def extract_with_css(selector_obj, css_pattern):
     return selector_obj.css(css_pattern).get(default='').strip()
@@ -29,10 +32,9 @@ class JobSelector(Enum):
 
 class JobsSpider(scrapy.Spider):
     name = 'jobs'
-    start_urls = [
-        'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/'
-        'search?keywords=Python&location=Croatia&start=0',
-    ]
+
+    num_scraped = 0
+    start_urls = [f'{BASE_URL}&start={num_scraped}']
 
     def parse(self, response, **kwargs):
         for job in response.css(JobSelector.BASE):
