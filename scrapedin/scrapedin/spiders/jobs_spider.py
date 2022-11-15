@@ -2,6 +2,14 @@ from enum import Enum
 import scrapy
 
 
+def extract_with_css(selector_obj, css_pattern):
+    return selector_obj.css(css_pattern).get(default='').strip()
+
+
+def remove_url_query_string(url):
+    return url.split('?')[0]
+
+
 class JobSelector(Enum):
     BASE = 'li div.job-search-card'
 
@@ -27,12 +35,6 @@ class JobsSpider(scrapy.Spider):
     ]
 
     def parse(self, response, **kwargs):
-        def extract_with_css(selector_obj, css_pattern):
-            return selector_obj.css(css_pattern).get(default='').strip()
-
-        def remove_url_query_string(url):
-            return url.split('?')[0]
-
         for job in response.css(JobSelector.BASE):
             url = remove_url_query_string(extract_with_css(job, JobSelector.URL))
 
