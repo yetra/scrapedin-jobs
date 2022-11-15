@@ -32,22 +32,22 @@ class JobsSpider(scrapy.Spider):
             return url.split('?')[0]
 
         for job in response.css(JobSelector.BASE):
+            url = remove_url_query_string(extract_with_css(job, JobSelector.URL))
+
             info = job.css(JobSelector.INFO)[0]
             metadata = info.css(JobSelector.METADATA)[0]
 
-            link = remove_url_query_string(extract_with_css(job, JobSelector.URL))
-
             data = {
-                'link': link,
+                'url': url,
                 'icon_url': extract_with_css(job, JobSelector.ICON_URL),
                 'title': extract_with_css(info, JobSelector.TITLE),
                 'subtitle': extract_with_css(info, JobSelector.SUBTITLE),
                 'location': extract_with_css(metadata, JobSelector.LOCATION),
                 'listdate': extract_with_css(metadata, JobSelector.LIST_DATE),
-                'description': response.follow(link, callback=self.parse_description),
+                'description': response.follow(url, callback=self.parse_description),
             }
 
-            yield scrapy.Request(url=link, callback=self.parse_description, meta=data)
+            yield scrapy.Request(url=url, callback=self.parse_description, meta=data)
 
     def parse_description(self, response):
         description = response.css('div.description__text section div').get()
