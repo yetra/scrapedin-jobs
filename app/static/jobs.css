@@ -25,3 +25,9 @@ html, body {
   height: 100vh;
   overflow: scroll;
 }
+
+footer {
+  margin: .25rem .5rem .25rem .5rem;
+  font-size: .75rem;
+  text-align: right;
+}
