@@ -9,6 +9,13 @@ html, body {
   background: rgba(0,48,143,1);
 }
 
+.description {
+  height: 100vh;
+  overflow: scroll;
+  position: sticky;
+  top: 0;
+}
+
 .btn-group {
   width: fit-content;
 }
