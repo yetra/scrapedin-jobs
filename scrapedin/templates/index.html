@@ -24,7 +24,132 @@
           <form class="d-flex" role="search" action="/search" method="get">
             <input type="search" class="form-control me-2" name="keywords" placeholder="Keywords" aria-label="keywords">
             <input type="search" class="form-control me-2" name="location" placeholder="Location" aria-label="location">
-            <button class="btn btn-danger" type="submit">Search</button>
+            <div class="dropdown me-2">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+              Job Type
+            </button>
+            <ul class="dropdown-menu px-2">
+                <li>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="job_type" value="F" id="JTF">
+                    <label class="form-check-label" for="JTF">
+                      Full-time
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="job_type" value="P" id="JTP">
+                    <label class="form-check-label" for="JTP">
+                      Part-time
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="job_type" value="C" id="JTC">
+                    <label class="form-check-label" for="JTC">
+                      Contract
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="job_type" value="T" id="JTT">
+                    <label class="form-check-label" for="JTT">
+                      Temporary
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="job_type" value="V" id="JTV">
+                    <label class="form-check-label" for="JTV">
+                      Volunteer
+                    </label>
+                  </div>
+                </li>
+              </ul>
+          </div>
+            <div class="dropdown me-2">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                Experience Level
+              </button>
+              <ul class="dropdown-menu px-2">
+                  <li>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="experience_level" value="1" id="E1">
+                      <label class="form-check-label" for="E1">
+                        Internship
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="experience_level" value="2" id="E2">
+                      <label class="form-check-label" for="E2">
+                        Entry level
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="experience_level" value="3" id="E3">
+                      <label class="form-check-label" for="E3">
+                        Associate
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="experience_level" value="4" id="E4">
+                      <label class="form-check-label" for="E4">
+                        Mid-Senior level
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="experience_level" value="5" id="E5">
+                      <label class="form-check-label" for="E5">
+                        Director
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+            </div>
+            <div class="dropdown me-2">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                Work Type
+              </button>
+              <ul class="dropdown-menu px-2">
+                  <li>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="work_type" value="1" id="WT1">
+                      <label class="form-check-label" for="WT1">
+                        On-site
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="work_type" value="2" id="WT2">
+                      <label class="form-check-label" for="WT2">
+                        Hybrid
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="work_type" value="3" id="WT3">
+                      <label class="form-check-label" for="WT3">
+                        Remote
+                      </label>
+                    </div>
+                  </li>
+                </ul>
+            </div>
+            <button class="btn btn-danger me-2" type="submit">Search</button>
           </form>
         </section>
       </div>
