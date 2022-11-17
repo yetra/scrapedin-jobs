@@ -4,18 +4,14 @@ from scrapedin.items import JobItem
 from utils import JobSelector, remove_url_query_string, extract_with_css
 
 
-BASE_URL = 'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search'
-
-
 class JobsSpider(scrapy.Spider):
     name = 'jobs'
 
     num_scraped = 0
-    base_url = ''
+    base_url = 'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search'
 
     def start_requests(self):
-        self.base_url = (
-            f'{BASE_URL}'
+        self.base_url += (
             f'?keywords={getattr(self, "keywords", "")}'
             f'&location={getattr(self, "location", "")}'
             f'&f_JT={getattr(self, "job_type", "")}'
