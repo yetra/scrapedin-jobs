@@ -20,3 +20,8 @@ html, body {
 .form-check {
   margin-bottom: 0;
 }
+
+#job-list {
+  height: 100vh;
+  overflow: scroll;
+}
