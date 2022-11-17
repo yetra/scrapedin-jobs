@@ -1,0 +1,18 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  background: rgb(2,0,36);
+  background: linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 30%, rgba(0,102,178,1) 100%);
+}
+
+.navbar {
+  background: rgba(0,48,143,1);
+}
+
+.btn-group {
+  width: fit-content;
+}
+
+.form-check {
+  margin-bottom: 0;
+}
