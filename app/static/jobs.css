@@ -11,8 +11,6 @@ html, body {
 .description {
   height: 100vh;
   overflow: scroll;
-  position: sticky;
-  top: 0;
 }
 
 .btn-group {
