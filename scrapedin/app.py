@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, render_template, request
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.project import get_project_settings
@@ -29,3 +31,9 @@ def search():
     reactor.run()
 
     return render_template('jobs.html')
+
+
+@app.get('/jobs')
+def jobs():
+    with open('jobs.json') as json_file:
+        return json.load(json_file)
