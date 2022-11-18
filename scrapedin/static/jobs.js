@@ -22,7 +22,7 @@ function addJob(job, index) {
         <a href="#${tabId}" class="${listItemClass}" id="${listItemId}" data-bs-toggle="list" role="tab" aria-controls="${tabId}">
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">${job.title}</h5>
-            <small>${job.list_date}</small>
+            <small class="col-auto">${job.list_date_text}</small>
           </div>
           <p class="mb-1">${job.subtitle}</p>
           <small>${job.location}</small>

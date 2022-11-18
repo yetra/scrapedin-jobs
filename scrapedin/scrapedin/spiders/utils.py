@@ -19,5 +19,6 @@ class JobSelector:
     SUBTITLE = 'h4.base-search-card__subtitle a::text'
     LOCATION = 'span.job-search-card__location::text'
     LIST_DATE = 'time::attr(datetime)'
+    LIST_DATE_TEXT = 'time::text'
 
     DESCRIPTION = 'div.description__text section div'

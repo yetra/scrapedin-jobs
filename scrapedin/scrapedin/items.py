@@ -14,6 +14,7 @@ class JobItem(scrapy.Item):
     subtitle = scrapy.Field()
     location = scrapy.Field()
     list_date = scrapy.Field()
+    list_date_text = scrapy.Field()
 
     description = scrapy.Field()
 

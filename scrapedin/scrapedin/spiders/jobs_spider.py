@@ -1,7 +1,7 @@
 import scrapy
 
 from scrapedin.items import JobItem
-from utils import JobSelector, remove_url_query_string, extract_with_css
+from scrapedin.spiders.utils import JobSelector, remove_url_query_string, extract_with_css
 
 
 class JobsSpider(scrapy.Spider):
@@ -40,6 +40,7 @@ class JobsSpider(scrapy.Spider):
                 subtitle=extract_with_css(info, JobSelector.SUBTITLE),
                 location=extract_with_css(metadata, JobSelector.LOCATION),
                 list_date=extract_with_css(metadata, JobSelector.LIST_DATE),
+                list_date_text=extract_with_css(metadata, JobSelector.LIST_DATE_TEXT),
             )
 
             # scrape job description
