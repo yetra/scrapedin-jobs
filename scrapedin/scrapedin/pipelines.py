@@ -8,8 +8,13 @@
 import fasttext
 from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
+from w3lib.html import remove_tags
 
 PRETRAINED_MODEL = '../lid.176.ftz'
+
+
+def clean_text(text):
+    return remove_tags(text).strip()
 
 
 def extract_lang_code(prediction):
@@ -24,7 +29,7 @@ class LanguageIdentificationPipeline:
         description = adapter.get('description')
 
         if description:
-            prediction = self.lang_id_model.predict(description)
+            prediction = self.lang_id_model.predict(clean_text(description))
             adapter['lang_code'] = extract_lang_code(prediction)
         else:
             raise DropItem(f'Missing description in {item}')
