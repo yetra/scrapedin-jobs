@@ -1,10 +1,17 @@
 $(document).ready(function () {
-    $.getJSON("/jobs", function (data) {
+    displayJobs("/jobs");
+});
+
+function displayJobs(endpoint, params) {
+    $.getJSON(endpoint, params, function (data) {
+        $("#job-list").html("");
+        $("#job-descriptions").html("");
+
         $.each(data, function (index, job) {
             addJob(job, index);
         });
     });
-});
+}
 
 function addJob(job, index) {
     let listItemId = `list-item-${index}`;
@@ -52,4 +59,24 @@ function addJob(job, index) {
     `);
 }
 
+function getCheckedSelector(inputName) {
+    return `input[name=${inputName}]:checked`
+}
 
+function getCheckedValues(selector) {
+    return $(selector).map((i, input) => input.value).get();
+}
+
+$(document).ready(function() {
+    $("#filter-form").submit(function (e) {
+        alert('intercept');
+        e.preventDefault();
+
+        let params = {
+            'lang_code': getCheckedValues(getCheckedSelector('lang_code')),
+            'years_of_experience': getCheckedValues(getCheckedSelector('years_of_experience'))
+        }
+
+        displayJobs("/filter", params);
+    });
+});
