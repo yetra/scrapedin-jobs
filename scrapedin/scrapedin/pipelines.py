@@ -5,9 +5,28 @@
 
 
 # useful for handling different item types with a single interface
+import fasttext
 from itemadapter import ItemAdapter
+from scrapy.exceptions import DropItem
+
+PRETRAINED_MODEL = '../lid.176.ftz'
 
 
-class ScrapedinPipeline:
+def extract_lang_code(prediction):
+    return prediction[0][0].split('__')[-1]
+
+
+class LanguageIdentificationPipeline:
+    lang_id_model = fasttext.load_model(PRETRAINED_MODEL)
+
     def process_item(self, item, spider):
+        adapter = ItemAdapter(item)
+        description = adapter.get('description')
+
+        if description:
+            prediction = self.lang_id_model.predict(description)
+            adapter['lang_code'] = extract_lang_code(prediction)
+        else:
+            raise DropItem(f'Missing description in {item}')
+
         return item
