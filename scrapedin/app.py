@@ -42,13 +42,13 @@ def jobs():
 
 @app.get('/filter')
 def filter_jobs():
-    lang_code = request.args.get('lang_code', '')
+    lang_code = request.args.getlist('lang_code')
     years = request.args.getlist('years_of_experience')
 
     df = pd.read_json('jobs.json')
 
     if lang_code:
-        df = df[df.lang_code == lang_code]
+        df = df[df.lang_code.isin(lang_code)]
     if years:
         df = df[df.years_of_experience.isin(years)]
 
