@@ -16,3 +16,7 @@ class JobItem(scrapy.Item):
     list_date = scrapy.Field()
 
     description = scrapy.Field()
+
+    # postprocessing fields
+    language = scrapy.Field()
+    years_of_experience = scrapy.Field()
