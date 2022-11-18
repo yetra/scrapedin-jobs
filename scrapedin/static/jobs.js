@@ -33,8 +33,15 @@ function addJob(job, index) {
         <div class="${tabClass}" id="${tabId}" role="tabpanel" aria-labelledby="${listItemId}">
             <div class="description card mb-3">
                 <div class="card-body">
-                  <h5 class="card-title">${job.title}</h5>
-                  <p class="card-subtitle mb-2">${job.subtitle}</p>
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title">${job.title}</h5>
+                      <p class="card-subtitle mb-2">${job.subtitle}</p>
+                    </div>
+                    <div class="col text-end">
+                      <img src="${job.icon_url}" alt="">
+                    </div>
+                  </div>
                   <small class="text-muted">${job.location} &bull; ${job.list_date}</small>
                   <p class="card-text">
                     ${job.description}

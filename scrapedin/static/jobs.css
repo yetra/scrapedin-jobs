@@ -31,3 +31,7 @@ footer {
   font-size: .75rem;
   text-align: right;
 }
+
+img {
+  max-width: 3rem;
+}
