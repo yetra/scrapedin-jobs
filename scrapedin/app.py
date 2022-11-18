@@ -42,8 +42,8 @@ def jobs():
 
 @app.get('/filter')
 def filter_jobs():
-    lang_code = request.args.getlist('lang_code')
-    years = request.args.getlist('years_of_experience')
+    lang_code = request.args.getlist('lang_code[]')
+    years = request.args.getlist('years_of_experience[]')
 
     df = pd.read_json('jobs.json')
 
