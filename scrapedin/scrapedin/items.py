@@ -18,5 +18,5 @@ class JobItem(scrapy.Item):
     description = scrapy.Field()
 
     # postprocessing fields
-    language = scrapy.Field()
+    lang_code = scrapy.Field()
     years_of_experience = scrapy.Field()
