@@ -38,7 +38,7 @@ function addJob(job, index) {
                       <h5 class="card-title">${job.title}</h5>
                       <p class="card-subtitle mb-2">${job.subtitle}</p>
                     </div>
-                    <div class="col text-end">
+                    <div class="col-auto text-end">
                       <img src="${job.icon_url}" alt="">
                     </div>
                   </div>
