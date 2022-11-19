@@ -53,8 +53,9 @@ class JobsSpider(scrapy.Spider):
             )
 
         self.num_scraped += len(jobs)
+        scrape_all = getattr(self, 'scrape_all', False)
 
-        if jobs:
+        if scrape_all and jobs:
             # scrape more jobs
             yield scrapy.Request(
                 url=f'{self.base_url}&start={self.num_scraped}',
