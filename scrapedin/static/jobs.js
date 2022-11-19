@@ -42,7 +42,11 @@ function addJob(job, index) {
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title">${job.title}</h5>
+                      <h5 class="card-title">
+                        <a href="${job.url}">
+                          ${job.title}
+                        </a>
+                      </h5>
                       <p class="card-subtitle mb-2">${job.subtitle}</p>
                     </div>
                     <div class="col-auto text-end">
