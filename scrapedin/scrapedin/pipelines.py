@@ -44,7 +44,7 @@ class YearsOfExperiencePipeline:
     # followed by an optional `+` sign
     # followed by the strings `year`, `years`, `godina`, or `godine`
     # (i.e. English and Croatian are the only supported languages)
-    pattern = r'\b(\d)\+? (?:years?|godin[ae])\b'
+    pattern = r'(\d)\+? (?:years?|godin[ae])'
 
     def process_item(self, item, spider):
         adapter = ItemAdapter(item)
