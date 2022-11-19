@@ -14,7 +14,10 @@ function getURLSearchParams() {
 }
 
 function displayJobs(endpoint, params) {
+    $("#spinner").show();
+
     $.getJSON(endpoint, params, function (data) {
+        $("#spinner").hide();
         $("#job-list").html("");
         $("#job-descriptions").html("");
 
