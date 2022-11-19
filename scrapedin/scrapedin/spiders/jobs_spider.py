@@ -7,6 +7,8 @@ from scrapedin.spiders.utils import JobSelector, remove_url_query_string, extrac
 class JobsSpider(scrapy.Spider):
     name = 'jobs'
 
+    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:107.0) Gecko/20100101 Firefox/107.0'
+
     num_scraped = 0
     base_url = 'https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search'
 
