@@ -38,27 +38,27 @@ function addJob(job, index) {
 
     $("#job-descriptions").append(`
         <div class="${tabClass}" id="${tabId}" role="tabpanel" aria-labelledby="${listItemId}">
-            <div class="description card mb-3">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title">
-                        <a href="${job.url}">
-                          ${job.title}
-                        </a>
-                      </h5>
-                      <p class="card-subtitle mb-2">${job.subtitle}</p>
-                    </div>
-                    <div class="col-auto text-end">
-                      <img src="${job.icon_url}" alt="">
-                    </div>
-                  </div>
-                  <small class="text-muted">${job.location} &bull; ${job.list_date}</small>
-                  <p class="card-text">
-                    ${job.description}
-                  </p>
+          <div class="description card mb-3">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title">
+                    <a href="${job.url}">
+                      ${job.title}
+                    </a>
+                  </h5>
+                  <p class="card-subtitle mb-2">${job.subtitle}</p>
+                </div>
+                <div class="col-auto text-end">
+                  <img src="${job.icon_url}" alt="">
                 </div>
               </div>
+              <small class="text-muted">${job.location} &bull; ${job.list_date}</small>
+              <p class="card-text">
+                ${job.description}
+              </p>
+            </div>
+          </div>
         </div>
     `);
 }
