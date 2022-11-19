@@ -1,6 +1,17 @@
 $(document).ready(function () {
-    displayJobs("/jobs");
+    displayJobs("/jobs", getURLSearchParams());
 });
+
+function getURLSearchParams() {
+    let urlParams = new URLSearchParams(window.location.search);
+    let extractedParams = {};
+
+    for (const key of urlParams.keys()) {
+        extractedParams[key] = urlParams.getAll(key).join(',');
+    }
+
+    return extractedParams;
+}
 
 function displayJobs(endpoint, params) {
     $.getJSON(endpoint, params, function (data) {
