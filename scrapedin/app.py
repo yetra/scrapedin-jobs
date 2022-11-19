@@ -1,10 +1,12 @@
 import json
 
+import crochet
+crochet.setup()
+
 import pandas as pd
 from flask import Flask, render_template, request
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.project import get_project_settings
-from twisted.internet import reactor
 
 from scrapedin.spiders.jobs_spider import JobsSpider
 
@@ -19,19 +21,23 @@ def index():
 
 @app.get('/search')
 def search():
-    d = crawl_runner.crawl(
-        JobsSpider,
-        keywords=request.args.get('keywords', ''),
-        location=request.args.get('location', ''),
-        job_type=','.join(request.args.getlist('job_type')),
-        experience_level=','.join(request.args.getlist('experience_level')),
-        work_type=','.join(request.args.getlist('work_type')),
-    )
-
-    d.addBoth(lambda _: reactor.stop())
-    reactor.run()
+    scrape_jobs(request.args)
 
     return render_template('jobs.html')
+
+
+@crochet.wait_for(timeout=60)
+def scrape_jobs(params):
+    d = crawl_runner.crawl(
+        JobsSpider,
+        keywords=params.get('keywords', ''),
+        location=params.get('location', ''),
+        job_type=','.join(params.getlist('job_type')),
+        experience_level=','.join(params.getlist('experience_level')),
+        work_type=','.join(params.getlist('work_type')),
+    )
+
+    return d
 
 
 @app.get('/jobs')
