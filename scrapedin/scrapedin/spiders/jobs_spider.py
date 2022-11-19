@@ -88,6 +88,6 @@ class JobsSpider(scrapy.Spider):
             )
 
     def parse_description(self, response, item):
-        item['description'] = response.css(JobSelector.DESCRIPTION).get()
+        item['description'] = extract_with_css(response, JobSelector.DESCRIPTION)
 
         yield item
