@@ -53,8 +53,8 @@ class YearsOfExperiencePipeline:
         if description:
             extracted = re.findall(self.pattern, clean_text(description))
             # the pattern could have multiple matches
-            # so the years of experience are the smallest found number (if any)
-            adapter['years_of_experience'] = min(extracted) if extracted else ''
+            # so the years of experience are the largest found number (if any)
+            adapter['years_of_experience'] = max(extracted) if extracted else ''
         else:
             raise DropItem(f'Missing description in {item}')
 
