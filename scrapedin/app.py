@@ -21,8 +21,6 @@ def index():
 
 @app.get('/search')
 def search():
-    scrape_jobs(request.args)
-
     return render_template('jobs.html')
 
 
@@ -42,6 +40,8 @@ def scrape_jobs(params):
 
 @app.get('/jobs')
 def jobs():
+    scrape_jobs(request.args)
+
     with open('jobs.json') as json_file:
         return json.load(json_file)
 
