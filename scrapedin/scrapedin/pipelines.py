@@ -12,7 +12,7 @@ from itemadapter import ItemAdapter
 from scrapy.exceptions import DropItem
 from w3lib.html import remove_tags
 
-PRETRAINED_MODEL = '../lid.176.ftz'
+PRETRAINED_MODEL = 'lid.176.ftz'
 
 
 def clean_text(text):
