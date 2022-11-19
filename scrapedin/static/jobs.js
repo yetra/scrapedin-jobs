@@ -73,7 +73,6 @@ function getCheckedValues(selector) {
 
 $(document).ready(function() {
     $("#filter-form").submit(function (e) {
-        alert('intercept');
         e.preventDefault();
 
         let params = {
