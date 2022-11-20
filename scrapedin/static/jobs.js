@@ -1,11 +1,6 @@
 const JOB_DISPLAY_INCREMENT = 25;
 let jobsDisplayed = 0;
 
-$(document).ready(function () {
-    jobsDisplayed = 0;
-
-    displayJobs("/jobs", getURLSearchParams());
-});
 
 function getURLSearchParams() {
     let urlParams = new URLSearchParams(window.location.search);
@@ -18,34 +13,9 @@ function getURLSearchParams() {
     return extractedParams;
 }
 
-function displayJobs(endpoint, params) {
-    refreshJobs();
-
-    $("#spinner").show();
-
-    $.getJSON(endpoint, params, function (data) {
-        $("#spinner").hide();
-
-        $.each(data, function (index, job) {
-            addJob(job, index);
-        });
-    });
-}
-
 function refreshJobs() {
     document.querySelectorAll("#job-list > .list-group-item").forEach(e => e.remove());
     document.querySelectorAll("#job-tabs > .tab-pane").forEach(e => e.remove());
-}
-
-function addJob(job, index) {
-    let listItemId = `list-item-${index}`;
-    let tabId = `tab-${index}`;
-
-    let jobListItem = createJobListItem(index, job, listItemId, tabId);
-    document.querySelector("#job-list").appendChild(jobListItem);
-
-    let jobTab = createJobTab(index, job, listItemId, tabId);
-    document.querySelector("#job-tabs").appendChild(jobTab);
 }
 
 function createJobListItem(index, job, listItemId, tabId) {
@@ -99,6 +69,31 @@ function createJobTab(index, job, listItemId, tabId) {
     return clone;
 }
 
+function addJob(job, index) {
+    let listItemId = `list-item-${index}`;
+    let tabId = `tab-${index}`;
+
+    let jobListItem = createJobListItem(index, job, listItemId, tabId);
+    document.querySelector("#job-list").appendChild(jobListItem);
+
+    let jobTab = createJobTab(index, job, listItemId, tabId);
+    document.querySelector("#job-tabs").appendChild(jobTab);
+}
+
+function displayJobs(endpoint, params) {
+    refreshJobs();
+
+    $("#spinner").show();
+
+    $.getJSON(endpoint, params, function (data) {
+        $("#spinner").hide();
+
+        $.each(data, function (index, job) {
+            addJob(job, index);
+        });
+    });
+}
+
 function getCheckedSelector(inputName) {
     return `input[name=${inputName}]:checked`
 }
@@ -106,6 +101,13 @@ function getCheckedSelector(inputName) {
 function getCheckedValues(selector) {
     return $(selector).map((i, input) => input.value).get();
 }
+
+
+$(document).ready(function () {
+    jobsDisplayed = 0;
+
+    displayJobs("/jobs", getURLSearchParams());
+});
 
 $(document).ready(function() {
     $("#filter-form").submit(function (e) {
