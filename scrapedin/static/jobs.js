@@ -13,7 +13,7 @@ function getURLSearchParams() {
     return extractedParams;
 }
 
-function refreshJobs() {
+function removeAllJobs() {
     document.querySelectorAll("#job-list > .list-group-item").forEach(e => e.remove());
     document.querySelectorAll("#job-tabs > .tab-pane").forEach(e => e.remove());
 }
@@ -81,7 +81,7 @@ function addJob(job, index) {
 }
 
 function displayJobs(endpoint, params) {
-    refreshJobs();
+    removeAllJobs();
 
     $("#spinner").show();
 
