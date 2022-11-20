@@ -1,4 +1,5 @@
 import json
+import os.path
 
 import crochet
 crochet.setup()
@@ -9,6 +10,8 @@ from scrapy.crawler import CrawlerRunner
 from scrapy.utils.project import get_project_settings
 
 from scrapedin.spiders.jobs_spider import JobsSpider
+
+JOBS_PATH = 'jobs.json'
 
 app = Flask(__name__)
 crawl_runner = CrawlerRunner(get_project_settings())
@@ -43,7 +46,9 @@ def scrape_jobs(params):
 def jobs():
     scrape_jobs(request.args)
 
-    with open('jobs.json') as json_file:
+    if not os.stat(JOBS_PATH).st_size:
+        return {}
+    with open(JOBS_PATH) as json_file:
         return json.load(json_file)
 
 
@@ -52,7 +57,9 @@ def filter_jobs():
     lang_code = request.args.getlist('lang_code[]')
     years = request.args.getlist('years_of_experience[]')
 
-    df = pd.read_json('jobs.json')
+    if not os.stat(JOBS_PATH).st_size:
+        return {}
+    df = pd.read_json(JOBS_PATH)
 
     if lang_code:
         df = df[df.lang_code.isin(lang_code)]
