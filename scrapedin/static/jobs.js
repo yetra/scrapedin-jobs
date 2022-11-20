@@ -1,5 +1,7 @@
 const JOB_DISPLAY_INCREMENT = 25;
+
 let jobsDisplayed = 0;
+let scrapeMoreJobs = true;
 
 
 function getURLSearchParams() {
@@ -81,8 +83,6 @@ function addJob(job, index) {
 }
 
 function displayJobs(endpoint, params) {
-    removeAllJobs();
-
     $("#spinner").show();
 
     $.getJSON(endpoint, params, function (data) {
@@ -91,6 +91,11 @@ function displayJobs(endpoint, params) {
         $.each(data, function (index, job) {
             addJob(job, index);
         });
+
+        if (!data.length) {
+            // disable more scraping if response was empty
+            scrapeMoreJobs = false;
+        }
     });
 }
 
@@ -105,7 +110,7 @@ function getCheckedValues(selector) {
 
 $(document).ready(function () {
     jobsDisplayed = 0;
-
+    removeAllJobs();
     displayJobs("/jobs", getURLSearchParams());
 });
 
@@ -121,6 +126,22 @@ $(document).ready(function() {
             "years_of_experience": checkedYOE,
         }
 
+        removeAllJobs();
         displayJobs("/filter", params);
+    });
+});
+
+$(document).ready(function () {
+   $('#job-list').scroll(function () {
+        let jobList = $(this).get(0);
+
+        if (jobList.scrollTop + jobList.clientHeight >= jobList.scrollHeight && scrapeMoreJobs) {
+            jobsDisplayed += JOB_DISPLAY_INCREMENT;
+
+            let searchParams = getURLSearchParams();
+            searchParams["start"] = jobsDisplayed;
+
+            displayJobs("/jobs", searchParams);
+        }
     });
 });
