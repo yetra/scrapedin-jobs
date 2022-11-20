@@ -94,7 +94,9 @@ function displayJobs(endpoint, params) {
         if (jobsDisplayed === data.length) {
             // no new jobs were scraped => end
             scrapeMoreJobs = false;
+
             moreButton.hide();
+            $("#more-button ~ small").text("This is the end of the line.");
 
         } else {
             removeAllJobs();
@@ -126,6 +128,7 @@ $(document).ready(function () {
 
     $("#main-spinner").show();
     $("#more-button").parent().addClass("invisible");
+    $("#more-button ~ small").text("");
 
     displayJobs("/jobs", getURLSearchParams());
 });
