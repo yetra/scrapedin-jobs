@@ -89,7 +89,10 @@ function displayJobs(endpoint, params) {
 
     $.getJSON(endpoint, params, function (data) {
         $("#main-spinner").hide();
-        moreButton.parent().removeClass("invisible");
+
+        if (data.length) {
+            moreButton.parent().removeClass("invisible");
+        }
 
         if (jobsDisplayed === data.length) {
             // no new jobs were scraped => end
