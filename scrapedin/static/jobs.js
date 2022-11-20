@@ -83,14 +83,11 @@ function addJob(job, index) {
 }
 
 function displayJobs(endpoint, params) {
-    let spinner = $("#main-spinner");
     let moreButton = $("#more-button");
-
-    spinner.show();
     moreButton.prop("disabled", true);
 
     $.getJSON(endpoint, params, function (data) {
-        spinner.hide();
+        $("#main-spinner").hide();
 
         $.each(data, function (index, job) {
             addJob(job, index);
@@ -120,7 +117,7 @@ $(document).ready(function () {
     scrapeMoreJobs = true;
     removeAllJobs();
 
-    $("#main-spinner").hide();
+    $("#main-spinner").show();
     $("#more-button").parent().addClass("invisible");
 
     displayJobs("/jobs", getURLSearchParams());
