@@ -1,8 +1,8 @@
 const JOB_DISPLAY_INCREMENT = 25;
-let jobs_displayed = 0;
+let jobsDisplayed = 0;
 
 $(document).ready(function () {
-    jobs_displayed = 0;
+    jobsDisplayed = 0;
 
     displayJobs("/jobs", getURLSearchParams());
 });
