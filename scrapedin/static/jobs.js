@@ -82,11 +82,15 @@ function addJob(job, index) {
     document.querySelector("#job-tabs").appendChild(jobTab);
 }
 
-function displayJobs(endpoint, params, spinner) {
-    spinner.removeClass("invisible");
+function displayJobs(endpoint, params) {
+    let spinner = $("#main-spinner");
+    let moreButton = $("#more-button");
+
+    spinner.show();
+    moreButton.prop("disabled", true);
 
     $.getJSON(endpoint, params, function (data) {
-        spinner.addClass("invisible");
+        spinner.hide();
 
         $.each(data, function (index, job) {
             addJob(job, index);
@@ -95,6 +99,9 @@ function displayJobs(endpoint, params, spinner) {
         if (!data.length) {
             // disable more scraping if response was empty
             scrapeMoreJobs = false;
+        } else {
+            moreButton.prop("disabled", false);
+            moreButton.parent().removeClass("invisible");
         }
     });
 }
@@ -112,13 +119,10 @@ $(document).ready(function () {
     jobsDisplayed = 0;
     removeAllJobs();
 
-    let searchParams = getURLSearchParams();
-    let mainSpinner = $("#main-spinner");
-    let moreSpinner = $("#more-spinner");
-    mainSpinner.addClass("invisible");
-    moreSpinner.addClass("invisible");
+    $("#main-spinner").hide();
+    $("#more-button").parent().addClass("invisible");
 
-    displayJobs("/jobs", searchParams, mainSpinner);
+    displayJobs("/jobs", getURLSearchParams());
 });
 
 $(document).ready(function() {
@@ -132,25 +136,23 @@ $(document).ready(function() {
             "lang_code": checkedLangCodes,
             "years_of_experience": checkedYOE,
         }
-        let spinner = $("#main-spinner");
 
         removeAllJobs();
-        displayJobs("/filter", params, spinner);
+        displayJobs("/filter", params);
     });
 });
 
 $(document).ready(function () {
-   $('#job-list').scroll(function () {
-        let jobList = $(this).get(0);
+   $("#more-button").click(function () {
+       $(this).prop("disabled", true);
 
-        if (jobList.scrollTop + jobList.clientHeight >= jobList.scrollHeight && scrapeMoreJobs) {
+        if (scrapeMoreJobs) {
             let searchParams = getURLSearchParams();
-            let spinner = $("#more-spinner")
 
             jobsDisplayed += JOB_DISPLAY_INCREMENT;
             searchParams["start"] = jobsDisplayed;
 
-            displayJobs("/jobs", searchParams, spinner);
+            displayJobs("/jobs", searchParams);
         }
     });
 });
