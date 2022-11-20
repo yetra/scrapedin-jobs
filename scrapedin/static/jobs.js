@@ -20,7 +20,7 @@ function getURLSearchParams() {
 
 function displayJobs(endpoint, params) {
     refreshJobs();
-    
+
     $("#spinner").show();
 
     $("#prev-button").hide();

@@ -33,6 +33,7 @@ def scrape_jobs(params):
         job_type=params.get('job_type', ''),
         experience_level=params.get('experience_level', ''),
         work_type=params.get('work_type', ''),
+        start=params.get('start', '0'),
     )
 
     return d
