@@ -19,6 +19,8 @@ function getURLSearchParams() {
 }
 
 function displayJobs(endpoint, params) {
+    refreshJobs();
+    
     $("#spinner").show();
 
     $("#prev-button").hide();
@@ -26,8 +28,6 @@ function displayJobs(endpoint, params) {
 
     $.getJSON(endpoint, params, function (data) {
         $("#spinner").hide();
-
-        refreshJobs();
 
         $.each(data, function (index, job) {
             addJob(job, index);
