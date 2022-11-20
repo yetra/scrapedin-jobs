@@ -45,6 +45,7 @@ class JobsSpider(scrapy.Spider):
             f'&f_E={getattr(self, "experience_level", "")}'
             f'&f_WT={getattr(self, "work_type", "")}'
         )
+        self.num_scraped = getattr(self, 'start', 0)
 
         yield scrapy.Request(
             url=f'{self.base_url}&start={self.num_scraped}',
