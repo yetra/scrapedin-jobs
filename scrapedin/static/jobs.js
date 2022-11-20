@@ -7,7 +7,7 @@ function getURLSearchParams() {
     let extractedParams = {};
 
     for (const key of urlParams.keys()) {
-        extractedParams[key] = urlParams.getAll(key).join(',');
+        extractedParams[key] = urlParams.getAll(key).join(",");
     }
 
     return extractedParams;
@@ -106,9 +106,12 @@ $(document).ready(function() {
     $("#filter-form").submit(function (e) {
         e.preventDefault();
 
+        let checkedLangCodes = getCheckedValues(getCheckedSelector("lang_code"));
+        let checkedYOE = getCheckedValues(getCheckedSelector("years_of_experience"));
+
         let params = {
-            'lang_code': getCheckedValues(getCheckedSelector('lang_code')),
-            'years_of_experience': getCheckedValues(getCheckedSelector('years_of_experience'))
+            "lang_code": checkedLangCodes,
+            "years_of_experience": checkedYOE,
         }
 
         displayJobs("/filter", params);
