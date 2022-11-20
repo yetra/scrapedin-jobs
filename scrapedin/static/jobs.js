@@ -1,6 +1,7 @@
 const JOB_DISPLAY_INCREMENT = 25;
 
 let jobsDisplayed = 0;
+let maxJobsDisplayed = 0;
 let scrapeMoreJobs = true;
 
 
@@ -63,8 +64,8 @@ function createJobTab(index, job, listItemId, tabId) {
 }
 
 function addJob(job, index) {
-    let listItemId = `list-item-${index + jobsDisplayed}`;
-    let tabId = `tab-${index + jobsDisplayed}`;
+    let listItemId = `list-item-${index + maxJobsDisplayed}`;
+    let tabId = `tab-${index + maxJobsDisplayed}`;
 
     let jobListItem = createJobListItem(index, job, listItemId, tabId);
     document.querySelector("#job-list > div").appendChild(jobListItem);
@@ -88,18 +89,23 @@ function displayJobs(endpoint, params) {
 
     $.getJSON(endpoint, params, function (data) {
         $("#main-spinner").hide();
+        moreButton.parent().removeClass("invisible");
 
-        $.each(data, function (index, job) {
-            addJob(job, index);
-        });
-
-        if (!data.length) {
-            // disable more scraping if response was empty
+        if (jobsDisplayed === data.length) {
+            // no new jobs were scraped => end
             scrapeMoreJobs = false;
+            moreButton.hide();
+
         } else {
+            removeAllJobs();
+            $.each(data, function (index, job) {
+                addJob(job, index);
+            });
             selectFirstJob();
+
+            jobsDisplayed += data.length;
+
             moreButton.prop("disabled", false);
-            moreButton.parent().removeClass("invisible");
         }
     });
 }
@@ -114,7 +120,7 @@ function getCheckedValues(selector) {
 
 
 $(document).ready(function () {
-    jobsDisplayed = 0;
+    maxJobsDisplayed = 0;
     scrapeMoreJobs = true;
     removeAllJobs();
 
@@ -148,8 +154,8 @@ $(document).ready(function () {
         if (scrapeMoreJobs) {
             let searchParams = getURLSearchParams();
 
-            jobsDisplayed += JOB_DISPLAY_INCREMENT;
-            searchParams["start"] = jobsDisplayed;
+            maxJobsDisplayed += JOB_DISPLAY_INCREMENT;
+            searchParams["start"] = maxJobsDisplayed;
 
             displayJobs("/jobs", searchParams);
         }
