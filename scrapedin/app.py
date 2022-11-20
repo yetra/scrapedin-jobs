@@ -30,9 +30,9 @@ def scrape_jobs(params):
         JobsSpider,
         keywords=params.get('keywords', ''),
         location=params.get('location', ''),
-        job_type=','.join(params.getlist('job_type')),
-        experience_level=','.join(params.getlist('experience_level')),
-        work_type=','.join(params.getlist('work_type')),
+        job_type=params.get('job_type', ''),
+        experience_level=params.get('experience_level', ''),
+        work_type=params.get('work_type', ''),
     )
 
     return d
