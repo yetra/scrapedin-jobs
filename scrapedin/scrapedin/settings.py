@@ -94,8 +94,8 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
 
 
 FEEDS = {
-    'jobs.json': {
-        'format': 'json',
+    'jobs.jsonl': {
+        'format': 'jsonlines',
         'encoding': 'utf8',
         'store_empty': False,
         'item_classes': ['scrapedin.items.JobItem'],
@@ -103,6 +103,6 @@ FEEDS = {
         'item_export_kwargs': {
             'export_empty_fields': True,
         },
-        'overwrite': True,
+        'overwrite': False,
     }
 }

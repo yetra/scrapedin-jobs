@@ -11,7 +11,7 @@ from scrapy.utils.project import get_project_settings
 
 from scrapedin.spiders.jobs_spider import JobsSpider
 
-JOBS_PATH = 'jobs.json'
+JOBS_PATH = 'jobs.jsonl'
 
 app = Flask(__name__)
 crawl_runner = CrawlerRunner(get_project_settings())
@@ -51,8 +51,8 @@ def jobs():
 
     if not os.stat(JOBS_PATH).st_size:
         return {}
-    with open(JOBS_PATH) as json_file:
-        return json.load(json_file)
+    with open(JOBS_PATH) as jsonl_file:
+        return [json.loads(line) for line in jsonl_file]
 
 
 @app.get('/filter')
@@ -62,7 +62,7 @@ def filter_jobs():
 
     if not os.stat(JOBS_PATH).st_size:
         return {}
-    df = pd.read_json(JOBS_PATH)
+    df = pd.read_json(JOBS_PATH, lines=True)
 
     if lang_code:
         df = df[df.lang_code.isin(lang_code)]
