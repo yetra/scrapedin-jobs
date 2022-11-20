@@ -24,6 +24,9 @@ def index():
 
 @app.get('/search')
 def search():
+    if os.path.exists(JOBS_PATH):
+        os.remove(JOBS_PATH)
+
     return render_template('jobs.html')
 
 
