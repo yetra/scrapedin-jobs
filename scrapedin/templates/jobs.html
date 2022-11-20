@@ -286,10 +286,45 @@
         </div>
         <div class="col">
           <div class="list-group" id="job-list" role="tablist">
+            <template id="job-list-item">
+              <a class="list-group-item list-group-item-action" data-bs-toggle="list" role="tab">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1"></h5>
+                  <small class="col-auto"></small>
+                </div>
+                <p class="mb-1"></p>
+                <small></small>
+              </a>
+            </template>
           </div>
         </div>
         <div class="col">
-          <div class="tab-content" id="job-descriptions">
+          <div class="tab-content" id="job-tabs">
+            <template id="job-tab">
+              <div class="tab-pane fade" role="tabpanel">
+                <div class="description card mb-3">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title">
+                          <a></a>
+                        </h5>
+                        <p class="card-subtitle mb-2"></p>
+                      </div>
+                      <div class="col-auto text-end">
+                        <img src="" alt="">
+                      </div>
+                    </div>
+                    <div class="row pb-3">
+                      <small class="text-muted"></small>
+                    </div>
+                    <div class="row">
+                      <p class="card-text"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
           </div>
         </div>
       </div>
