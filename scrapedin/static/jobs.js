@@ -16,8 +16,8 @@ function getURLSearchParams() {
 }
 
 function removeAllJobs() {
-    document.querySelectorAll("#job-list > .list-group-item").forEach(e => e.remove());
-    document.querySelectorAll("#job-tabs > .tab-pane").forEach(e => e.remove());
+    document.querySelectorAll("#job-list > div > .list-group-item").forEach(e => e.remove());
+    document.querySelectorAll("#job-tabs .tab-pane").forEach(e => e.remove());
 }
 
 function createJobListItem(index, job, listItemId, tabId) {
@@ -76,17 +76,17 @@ function addJob(job, index) {
     let tabId = `tab-${index + jobsDisplayed}`;
 
     let jobListItem = createJobListItem(index, job, listItemId, tabId);
-    document.querySelector("#job-list").appendChild(jobListItem);
+    document.querySelector("#job-list > div").appendChild(jobListItem);
 
     let jobTab = createJobTab(index, job, listItemId, tabId);
     document.querySelector("#job-tabs").appendChild(jobTab);
 }
 
-function displayJobs(endpoint, params) {
-    $("#spinner").show();
+function displayJobs(endpoint, params, spinner) {
+    spinner.removeClass("invisible");
 
     $.getJSON(endpoint, params, function (data) {
-        $("#spinner").hide();
+        spinner.addClass("invisible");
 
         $.each(data, function (index, job) {
             addJob(job, index);
@@ -111,7 +111,14 @@ function getCheckedValues(selector) {
 $(document).ready(function () {
     jobsDisplayed = 0;
     removeAllJobs();
-    displayJobs("/jobs", getURLSearchParams());
+
+    let searchParams = getURLSearchParams();
+    let mainSpinner = $("#main-spinner");
+    let moreSpinner = $("#more-spinner");
+    mainSpinner.addClass("invisible");
+    moreSpinner.addClass("invisible");
+
+    displayJobs("/jobs", searchParams, mainSpinner);
 });
 
 $(document).ready(function() {
@@ -125,9 +132,10 @@ $(document).ready(function() {
             "lang_code": checkedLangCodes,
             "years_of_experience": checkedYOE,
         }
+        let spinner = $("#main-spinner");
 
         removeAllJobs();
-        displayJobs("/filter", params);
+        displayJobs("/filter", params, spinner);
     });
 });
 
@@ -136,12 +144,13 @@ $(document).ready(function () {
         let jobList = $(this).get(0);
 
         if (jobList.scrollTop + jobList.clientHeight >= jobList.scrollHeight && scrapeMoreJobs) {
-            jobsDisplayed += JOB_DISPLAY_INCREMENT;
-
             let searchParams = getURLSearchParams();
+            let spinner = $("#more-spinner")
+
+            jobsDisplayed += JOB_DISPLAY_INCREMENT;
             searchParams["start"] = jobsDisplayed;
 
-            displayJobs("/jobs", searchParams);
+            displayJobs("/jobs", searchParams, spinner);
         }
     });
 });
