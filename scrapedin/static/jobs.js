@@ -23,22 +23,12 @@ function displayJobs(endpoint, params) {
 
     $("#spinner").show();
 
-    $("#prev-button").hide();
-    $("#next-button").hide();
-
     $.getJSON(endpoint, params, function (data) {
         $("#spinner").hide();
 
         $.each(data, function (index, job) {
             addJob(job, index);
         });
-
-        if (jobs_displayed > 0) {
-            $("#prev-button").show();
-        }
-        if (data.length) {
-            $("#next-button").show();
-        }
     });
 }
 
@@ -131,26 +121,4 @@ $(document).ready(function() {
 
         displayJobs("/filter", params);
     });
-});
-
-$(document).ready(function() {
-   $("#prev-button").click(function() {
-       jobs_displayed -= JOB_DISPLAY_INCREMENT;
-
-       let searchParams = getURLSearchParams();
-       searchParams["start"] = jobs_displayed;
-
-        displayJobs("/jobs", searchParams);
-   })
-});
-
-$(document).ready(function() {
-   $("#next-button").click(function() {
-       jobs_displayed += JOB_DISPLAY_INCREMENT;
-
-       let searchParams = getURLSearchParams();
-       searchParams["start"] = jobs_displayed;
-
-        displayJobs("/jobs", searchParams);
-   })
 });
