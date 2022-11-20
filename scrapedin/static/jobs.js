@@ -29,10 +29,6 @@ function createJobListItem(index, job, listItemId, tabId) {
     a.setAttribute("href", `#${tabId}`);
     a.setAttribute("aria-controls", tabId);
 
-    if (index === 0 && jobsDisplayed === 0) {
-        a.classList.add("active");
-    }
-
     clone.querySelector("h5").textContent = job.title;
     clone.querySelector("p").textContent = job.subtitle;
 
@@ -50,11 +46,6 @@ function createJobTab(index, job, listItemId, tabId) {
     let firstDiv = clone.querySelector("div");
     firstDiv.setAttribute("id", tabId);
     firstDiv.setAttribute("aria-labelledby", listItemId);
-
-    if (index === 0 && jobsDisplayed === 0) {
-        firstDiv.classList.add("show");
-        firstDiv.classList.add("active");
-    }
 
     let h5Link = clone.querySelector("h5 > a");
     h5Link.setAttribute("href", job.url);
@@ -82,6 +73,15 @@ function addJob(job, index) {
     document.querySelector("#job-tabs").appendChild(jobTab);
 }
 
+function selectFirstJob() {
+    let firstJobItem = document.querySelector("#job-list .list-group-item");
+    firstJobItem.classList.add("active");
+
+    let firstJobTab = document.querySelector("#job-tabs .tab-pane");
+    firstJobTab.classList.add("show");
+    firstJobTab.classList.add("active");
+}
+
 function displayJobs(endpoint, params) {
     let moreButton = $("#more-button");
     moreButton.prop("disabled", true);
@@ -97,6 +97,7 @@ function displayJobs(endpoint, params) {
             // disable more scraping if response was empty
             scrapeMoreJobs = false;
         } else {
+            selectFirstJob();
             moreButton.prop("disabled", false);
             moreButton.parent().removeClass("invisible");
         }
