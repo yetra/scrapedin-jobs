@@ -29,7 +29,7 @@ function createJobListItem(index, job, listItemId, tabId) {
     a.setAttribute("href", `#${tabId}`);
     a.setAttribute("aria-controls", tabId);
 
-    if (index === 0) {
+    if (index === 0 && jobsDisplayed === 0) {
         a.classList.add("active");
     }
 
@@ -51,7 +51,7 @@ function createJobTab(index, job, listItemId, tabId) {
     firstDiv.setAttribute("id", tabId);
     firstDiv.setAttribute("aria-labelledby", listItemId);
 
-    if (index === 0) {
+    if (index === 0 && jobsDisplayed === 0) {
         firstDiv.classList.add("show");
         firstDiv.classList.add("active");
     }
@@ -72,8 +72,8 @@ function createJobTab(index, job, listItemId, tabId) {
 }
 
 function addJob(job, index) {
-    let listItemId = `list-item-${index}`;
-    let tabId = `tab-${index}`;
+    let listItemId = `list-item-${index + jobsDisplayed}`;
+    let tabId = `tab-${index + jobsDisplayed}`;
 
     let jobListItem = createJobListItem(index, job, listItemId, tabId);
     document.querySelector("#job-list").appendChild(jobListItem);
