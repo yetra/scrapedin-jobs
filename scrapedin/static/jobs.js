@@ -18,13 +18,18 @@ function displayJobs(endpoint, params) {
 
     $.getJSON(endpoint, params, function (data) {
         $("#spinner").hide();
-        $("#job-list").html("");
-        $("#job-descriptions").html("");
+
+        refreshJobs();
 
         $.each(data, function (index, job) {
             addJob(job, index);
         });
     });
+}
+
+function refreshJobs() {
+    document.querySelectorAll("#job-list > .list-group-item").forEach(e => e.remove());
+    document.querySelectorAll("#job-tabs > .tab-pane").forEach(e => e.remove());
 }
 
 function addJob(job, index) {
