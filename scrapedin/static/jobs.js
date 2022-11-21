@@ -115,12 +115,48 @@ function displayJobs(endpoint, params) {
     });
 }
 
+function filterJobs() {
+    let params = getFilterParams();
+
+    let moreButton = $("#more-button");
+    moreButton.prop("disabled", true);
+
+    $.getJSON("/filter", params, function (data) {
+        removeAllJobs();
+
+        moreButton.prop("disabled", false);
+        moreButton.parent().removeClass("invisible");
+
+        if (!scrapeMoreJobs) {
+            moreButton.hide();
+            $("#more-button ~ small").text("This is the end of the line.");
+
+        }
+        if (data.length) {
+            $.each(data, function (index, job) {
+                addJob(job, index);
+            });
+            selectFirstJob();
+        }
+    });
+}
+
 function getCheckedSelector(inputName) {
     return `input[name=${inputName}]:checked`
 }
 
 function getCheckedValues(selector) {
     return $(selector).map((i, input) => input.value).get();
+}
+
+function getFilterParams() {
+    let checkedLangCodes = getCheckedValues(getCheckedSelector("lang_code"));
+    let checkedYOE = getCheckedValues(getCheckedSelector("years_of_experience"));
+
+    return {
+        "lang_code": checkedLangCodes,
+        "years_of_experience": checkedYOE,
+    };
 }
 
 
@@ -139,17 +175,7 @@ $(document).ready(function () {
 $(document).ready(function() {
     $("#filter-form").submit(function (e) {
         e.preventDefault();
-
-        let checkedLangCodes = getCheckedValues(getCheckedSelector("lang_code"));
-        let checkedYOE = getCheckedValues(getCheckedSelector("years_of_experience"));
-
-        let params = {
-            "lang_code": checkedLangCodes,
-            "years_of_experience": checkedYOE,
-        }
-
-        removeAllJobs();
-        displayJobs("/filter", params);
+        filterJobs();
     });
 });
 
