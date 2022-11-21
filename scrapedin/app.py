@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import uuid
 
 import crochet
@@ -14,8 +15,9 @@ from scrapedin.spiders.jobs_spider import JobsSpider
 
 JOBS_DIR = 'jobs'
 
-if not os.path.exists(JOBS_DIR):
-    os.mkdir(JOBS_DIR)
+if os.path.exists(JOBS_DIR):
+    shutil.rmtree(JOBS_DIR)
+os.mkdir(JOBS_DIR)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get(
