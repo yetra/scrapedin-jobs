@@ -1,0 +1,28 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  background: rgb(2,0,36);
+  background: linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 30%, rgba(0,102,178,1) 100%);
+}
+
+main {
+  height: 100%;
+}
+
+.container {
+  max-width: 960px;
+}
+
+.jumbotron-heading {
+  font-size: 3.95rem;
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+footer {
+  margin: .25rem .5rem .25rem .5rem;
+  font-size: .75rem;
+  text-align: right;
+}

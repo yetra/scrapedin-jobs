@@ -1,0 +1,42 @@
+html, body {
+  background: rgb(2,0,36);
+  background: linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 30%, rgba(0,102,178,1) 100%) no-repeat;
+  background-size: cover;
+}
+
+.navbar {
+  background: rgba(0,48,143,1);
+}
+
+.description {
+  height: 100vh;
+  overflow: scroll;
+}
+
+.btn-group {
+  width: fit-content;
+}
+
+.form-check {
+  margin-bottom: 0;
+}
+
+#job-list {
+  height: 100vh;
+  overflow: scroll;
+}
+
+footer {
+  margin: .25rem .5rem .25rem .5rem;
+  font-size: .75rem;
+  text-align: right;
+}
+
+img {
+  max-width: 3rem;
+}
+
+.card-title a {
+  text-decoration: none;
+  color: black;
+}
