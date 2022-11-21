@@ -1,5 +1,5 @@
 const JOB_DISPLAY_INCREMENT = 25;
-const NO_MORE_JOBS_TEXT = "This is the end of the line.";
+const NO_MORE_JOBS_TEXT = "You've reached the end of the line.";
 
 let jobsDisplayed = 0;
 let maxJobsDisplayed = 0;
