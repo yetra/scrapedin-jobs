@@ -83,11 +83,11 @@ function selectFirstJob() {
     firstJobTab.classList.add("active");
 }
 
-function displayJobs(endpoint, params) {
+function displayJobs(params) {
     let moreButton = $("#more-button");
     moreButton.prop("disabled", true);
 
-    $.getJSON(endpoint, params, function (data) {
+    $.getJSON("/jobs", params, function (data) {
         $("#main-spinner").hide();
 
         if (data.length) {
@@ -169,7 +169,7 @@ $(document).ready(function () {
     $("#more-button").parent().addClass("invisible");
     $("#more-button ~ small").text("");
 
-    displayJobs("/jobs", getURLSearchParams());
+    displayJobs(getURLSearchParams());
 });
 
 $(document).ready(function() {
@@ -189,7 +189,7 @@ $(document).ready(function () {
             maxJobsDisplayed += JOB_DISPLAY_INCREMENT;
             searchParams["start"] = maxJobsDisplayed;
 
-            displayJobs("/jobs", searchParams);
+            displayJobs(searchParams);
         }
     });
 });
