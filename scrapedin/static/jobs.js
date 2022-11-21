@@ -1,4 +1,5 @@
 const JOB_DISPLAY_INCREMENT = 25;
+const NO_MORE_JOBS_TEXT = "This is the end of the line.";
 
 let jobsDisplayed = 0;
 let maxJobsDisplayed = 0;
@@ -99,7 +100,7 @@ function displayJobs(params) {
             scrapeMoreJobs = false;
 
             moreButton.hide();
-            $("#more-button ~ small").text("This is the end of the line.");
+            $("#more-button ~ small").text(NO_MORE_JOBS_TEXT);
 
         } else {
             jobsDisplayed += data.length;
@@ -129,7 +130,7 @@ function filterJobs() {
 
         if (!scrapeMoreJobs) {
             moreButton.hide();
-            $("#more-button ~ small").text("This is the end of the line.");
+            $("#more-button ~ small").text(NO_MORE_JOBS_TEXT);
 
         }
         if (data.length) {
