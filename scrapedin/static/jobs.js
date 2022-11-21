@@ -116,6 +116,16 @@ function displayJobs(params) {
     });
 }
 
+function getFilterParams() {
+    let checkedLangCodes = getCheckedValues(getCheckedSelector("lang_code"));
+    let checkedYOE = getCheckedValues(getCheckedSelector("years_of_experience"));
+
+    return {
+        "lang_code": checkedLangCodes,
+        "years_of_experience": checkedYOE,
+    };
+}
+
 function filterJobs() {
     let params = getFilterParams();
 
@@ -148,16 +158,6 @@ function getCheckedSelector(inputName) {
 
 function getCheckedValues(selector) {
     return $(selector).map((i, input) => input.value).get();
-}
-
-function getFilterParams() {
-    let checkedLangCodes = getCheckedValues(getCheckedSelector("lang_code"));
-    let checkedYOE = getCheckedValues(getCheckedSelector("years_of_experience"));
-
-    return {
-        "lang_code": checkedLangCodes,
-        "years_of_experience": checkedYOE,
-    };
 }
 
 
