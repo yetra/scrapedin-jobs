@@ -102,13 +102,13 @@ function displayJobs(endpoint, params) {
             $("#more-button ~ small").text("This is the end of the line.");
 
         } else {
+            jobsDisplayed += data.length;
+            
             removeAllJobs();
             $.each(data, function (index, job) {
                 addJob(job, index);
             });
-            selectFirstJob();
-
-            jobsDisplayed += data.length;
+            filterJobs();
 
             moreButton.prop("disabled", false);
         }
