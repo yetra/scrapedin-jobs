@@ -93,6 +93,11 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
 # TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
 
 
+FEEDS = {
+    'jobs.jsonl': {
+        'format': 'jsonlines'
+    }
+}
 FEED_EXPORT_ENCODING = 'utf8'
 FEED_STORE_EMPTY = False
 FEED_EXPORT_INDENT = 4
