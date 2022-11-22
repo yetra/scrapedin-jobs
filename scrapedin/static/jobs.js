@@ -90,9 +90,11 @@ function displayJobs(params) {
 
     $.getJSON("/jobs", params, function (data) {
         $("#main-spinner").hide();
+        moreButton.parent().removeClass("invisible");
 
-        if (data.length) {
-            moreButton.parent().removeClass("invisible");
+        if (!data.length) {
+            // data.length could be undefined if empty
+            data.length = 0;
         }
 
         if (jobsDisplayed === data.length) {
@@ -103,14 +105,9 @@ function displayJobs(params) {
             $("#more-button ~ small").text(NO_MORE_JOBS_TEXT);
 
         } else {
-            jobsDisplayed += data.length;
-            
-            removeAllJobs();
-            $.each(data, function (index, job) {
-                addJob(job, index);
-            });
-            filterJobs();
+            jobsDisplayed = data.length;
 
+            filterJobs();
             moreButton.prop("disabled", false);
         }
     });
@@ -162,6 +159,7 @@ function getCheckedValues(selector) {
 
 
 $(document).ready(function () {
+    jobsDisplayed = 0;
     maxJobsDisplayed = 0;
     scrapeMoreJobs = true;
     removeAllJobs();
