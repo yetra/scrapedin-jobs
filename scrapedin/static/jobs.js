@@ -162,6 +162,7 @@ function getCheckedValues(selector) {
 
 
 $(document).ready(function () {
+    jobsDisplayed = 0;
     maxJobsDisplayed = 0;
     scrapeMoreJobs = true;
     removeAllJobs();
