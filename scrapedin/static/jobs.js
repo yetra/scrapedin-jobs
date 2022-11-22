@@ -90,7 +90,6 @@ function displayJobs(params) {
 
     $.getJSON("/jobs", params, function (data) {
         $("#main-spinner").hide();
-
         moreButton.parent().removeClass("invisible");
 
         if (!data.length) {
@@ -107,13 +106,8 @@ function displayJobs(params) {
 
         } else {
             jobsDisplayed = data.length;
-            
-            removeAllJobs();
-            $.each(data, function (index, job) {
-                addJob(job, index);
-            });
-            filterJobs();
 
+            filterJobs();
             moreButton.prop("disabled", false);
         }
     });
