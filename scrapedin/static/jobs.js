@@ -106,7 +106,7 @@ function displayJobs(params) {
             $("#more-button ~ small").text(NO_MORE_JOBS_TEXT);
 
         } else {
-            jobsDisplayed += data.length;
+            jobsDisplayed = data.length;
             
             removeAllJobs();
             $.each(data, function (index, job) {
